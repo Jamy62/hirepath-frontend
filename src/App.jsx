@@ -8,6 +8,7 @@ import { useRoutes } from 'react-router-dom';
 import Router from './routes/Router';
 
 import { baselightTheme } from "./theme/DefaultColors";
+import {AuthProvider} from "src/contexts/AuthContext.js";
 
 function App() {
   
@@ -15,10 +16,12 @@ function App() {
   const theme = baselightTheme;
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {routing}
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {routing}
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

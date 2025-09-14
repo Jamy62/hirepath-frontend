@@ -14,7 +14,7 @@ const Menuitems = [
     id: uniqueId(),
     title: 'Dashboard',
     icon: IconLayoutDashboard,
-    href: '/dashboard',
+    href: '/admin/dashboard',
   },
   {
     navlabel: true,
