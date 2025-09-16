@@ -11,7 +11,7 @@ import {
   Alert
 } from '@mui/material';
 import { useAuth } from 'src/contexts/AuthContext.js';
-import {Navigate, useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CustomTextField from '../../../components/forms/theme-elements/CustomTextField';
 
 const AuthLogin = ({ title, subtitle, subtext }) => {
@@ -21,7 +21,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
   });
   const [errors, setErrors] = useState({});
 
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {

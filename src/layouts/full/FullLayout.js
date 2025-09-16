@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { styled, Container, Box, Typography, Link } from "@mui/material";
+import { useState } from "react";
+import { styled, Container, Box, Typography, Link, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import Header from "./header/Header";
@@ -17,12 +17,16 @@ const PageWrapper = styled("div")(() => ({
   flexDirection: "column",
   zIndex: 1,
   backgroundColor: "transparent",
+  minWidth: 0,
 }));
 
 const FullLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  // const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+
+  const sidebarWidth = '300px';
+  const collapsedSidebarWidth = '80px';
 
   return (
     <MainWrapper className="mainwrapper">
@@ -37,7 +41,18 @@ const FullLayout = () => {
       {/* ------------------------------------------- */}
       {/* Main Wrapper */}
       {/* ------------------------------------------- */}
-      <PageWrapper className="page-wrapper">
+      <PageWrapper 
+        className="page-wrapper"
+        sx={{
+          ...(lgUp && {
+            marginLeft: isSidebarOpen ? sidebarWidth : collapsedSidebarWidth,
+            transition: (theme) => theme.transitions.create('margin', {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+          }),
+        }}
+      >
         {/* ------------------------------------------- */}
         {/* Header */}
         {/* ------------------------------------------- */}

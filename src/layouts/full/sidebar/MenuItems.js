@@ -17,6 +17,12 @@ const Menuitems = [
     href: '/admin/dashboard',
   },
   {
+    id: uniqueId(),
+    title: 'Users',
+    icon: IconLayoutDashboard,
+    href: '/admin/users',
+  },
+  {
     navlabel: true,
     subheader: 'Utilities',
   },

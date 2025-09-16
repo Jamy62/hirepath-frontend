@@ -1,19 +1,16 @@
 import { useMediaQuery, Box, Drawer } from '@mui/material';
 import SidebarItems from './SidebarItems';
 import { Upgrade } from './Updrade';
-import { Sidebar, Logo } from 'react-mui-sidebar';
-import logo from '../../../assets/images/logos/dark1-logo.svg'
+import logo from '../../../assets/images/logos/logo.jpg';
 
 const MSidebar = (props) => {
-
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const sidebarWidth = '270px';
+  const collapsedSidebarWidth = '80px';
 
-  // Custom CSS for short scrollbar
   const scrollbarStyles = {
     '&::-webkit-scrollbar': {
       width: '7px',
-
     },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: '#eff2f7',
@@ -21,62 +18,54 @@ const MSidebar = (props) => {
     },
   };
 
+  const Logo = (
+    <Box sx={{ p: 1.4, display: 'flex', justifyContent: 'center' }}>
+      <img src={logo} alt="logo" width={170}/>
+    </Box>
+  );
+
+  const SidebarContent = (
+    <Box sx={{ height: '100%' }}>
+      {Logo}
+      <Box sx={{ p: 2 }}>
+        <SidebarItems />
+      </Box>
+    </Box>
+  );
+
+  const SidebarContentMobile = (
+    <Box sx={{ height: '100%' }}>
+      {Logo}
+      <Box sx={{ p: 2 }}>
+        <SidebarItems />
+      </Box>
+      <Upgrade />
+    </Box>
+  );
 
   if (lgUp) {
     return (
-      <Box
-        sx={{
-          width: sidebarWidth,
-          flexShrink: 0,
+      <Drawer
+        anchor="left"
+        variant="permanent"
+        PaperProps={{
+          sx: {
+            width: props.isSidebarOpen ? sidebarWidth : collapsedSidebarWidth,
+            transition: (theme) => theme.transitions.create('width', {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
+            boxSizing: 'border-box',
+            border: '0',
+            ...scrollbarStyles,
+          },
         }}
       >
-        {/* ------------------------------------------- */}
-        {/* Sidebar for desktop */}
-        {/* ------------------------------------------- */}
-        <Drawer
-          anchor="left"
-          open={props.isSidebarOpen}
-          variant="permanent"
-          PaperProps={{
-            sx: {
-              boxSizing: 'border-box',
-              ...scrollbarStyles,
-            },
-          }}
-        >
-          {/* ------------------------------------------- */}
-          {/* Sidebar Box */}
-          {/* ------------------------------------------- */}
-          <Box
-            sx={{
-              height: '100%',
-            }}
-          >
-
-            <Sidebar
-              width={'270px'}
-              collapsewidth="80px"
-              open={props.isSidebarOpen}
-              themeColor="#5d87ff"
-              themeSecondaryColor="#49beff"
-              showProfile={false}
-            >
-              {/* ------------------------------------------- */}
-              {/* Logo */}
-              {/* ------------------------------------------- */}
-              <Logo img={logo} />
-              <Box>
-                {/* ------------------------------------------- */}
-                {/* Sidebar Items */}
-                {/* ------------------------------------------- */}
-                <SidebarItems />
-              </Box>
-            </Sidebar >
-          </Box>
-        </Drawer >
-      </Box >
+        {SidebarContent}
+      </Drawer>
     );
   }
+
   return (
     <Drawer
       anchor="left"
@@ -85,35 +74,15 @@ const MSidebar = (props) => {
       variant="temporary"
       PaperProps={{
         sx: {
-
+          width: sidebarWidth,
           boxShadow: (theme) => theme.shadows[8],
           ...scrollbarStyles,
         },
       }}
     >
-      <Sidebar
-        width={'270px'}
-        collapsewidth="80px"
-        isCollapse={false}
-        mode="light"
-        direction="ltr"
-        themeColor="#5d87ff"
-        themeSecondaryColor="#49beff"
-        showProfile={false}
-      >
-        {/* ------------------------------------------- */}
-        {/* Logo */}
-        {/* ------------------------------------------- */}
-
-        <Logo img={logo} />
-
-        {/* ------------------------------------------- */}
-        {/* Sidebar For Mobile */}
-        {/* ------------------------------------------- */}
-        <SidebarItems />
-        <Upgrade />
-      </Sidebar>
+      {SidebarContentMobile}
     </Drawer>
   );
 };
+
 export default MSidebar;

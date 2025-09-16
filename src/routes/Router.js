@@ -9,6 +9,7 @@ const FullLayout = Loadable(lazy(() => import('../layouts/full/FullLayout')));
 const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout')));
 
 const Dashboard = Loadable(lazy(() => import('../views/admin/dashboard/Dashboard')))
+const Users = Loadable(lazy(() => import('../views/admin/Users/Users')))
 const SamplePage = Loadable(lazy(() => import('../views/sample-page/SamplePage')))
 const Icons = Loadable(lazy(() => import('../views/icons/Icons')))
 const TypographyPage = Loadable(lazy(() => import('../views/utilities/TypographyPage')))
@@ -24,6 +25,7 @@ const Router = [
     children: [
       { path: '/', element: <Navigate to="/admin/dashboard" /> },
       { path: '/admin/dashboard', exact: true, element: <Dashboard /> },
+      { path: '/admin/users', exact: true, element: <Users /> },
       { path: '/sample-page', exact: true, element: <SamplePage /> },
       { path: '/icons', exact: true, element: <Icons /> },
       { path: '/ui/typography', exact: true, element: <TypographyPage /> },

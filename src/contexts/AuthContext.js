@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import { createContext, useContext, useState, useCallback, useEffect } from "react";
 import axios from 'axios';
 
 const AuthContext = createContext(undefined);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
       console.error('Login Api error', e);
       throw e;
     }
-  });
+  }, []);
 
   const register = useCallback(async (name, email, password) => {
     try {
@@ -55,18 +55,34 @@ export const AuthProvider = ({ children }) => {
       console.error('Registration Api failed', e);
       throw e;
     }
-  });
+  }, []);
 
-  const logout = useCallback(async () => {
-    try {
-      await apiClient.post('/auth/logout');
-    } catch (e) {
-      console.error('Logout Api failed', e);
-    } finally {
-      setUser(null);
-      setToken(null);
-    }
-  });
+  const logout = useCallback(() => {
+    apiClient.post('/auth/logout').catch(err => {
+      console.log("Logout API call failed:", err.message);
+    });
+
+    setUser(null);
+    setToken(null);
+  }, []);
+
+  useEffect(() => {
+    const interceptor = apiClient.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          console.log("Token invalid or expired");
+          logout();
+        }
+
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      apiClient.interceptors.response.eject(interceptor);
+    };
+  }, [logout]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated: !!token, user, token, apiClient, login, register, logout }}>
