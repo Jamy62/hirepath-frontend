@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, AppBar, Toolbar, styled, Stack, IconButton, Badge, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 
-// components
+// dashboard
 import Profile from './Profile';
 import { IconBellRinging, IconMenu } from '@tabler/icons-react';
 

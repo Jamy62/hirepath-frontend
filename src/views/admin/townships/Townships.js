@@ -26,32 +26,12 @@ function getComparator(order, orderBy) {
 
 const titles = [
   {
-    id: 'profile',
-    label: 'Profile',
-  },
-  {
     id: 'name',
     label: 'Name',
   },
   {
-    id: 'fullName',
-    label: 'Full Name',
-  },
-  {
-    id: 'email',
-    label: 'Email',
-  },
-  {
-    id: 'mobile',
-    label: 'Mobile',
-  },
-  {
-    id: 'isActive',
-    label: 'Active',
-  },
-  {
-    id: 'isBlocked',
-    label: 'Blocked',
+    id: 'provinceName',
+    label: 'Province Name',
   },
   {
     id: 'createdAt',
@@ -59,7 +39,7 @@ const titles = [
   }
 ];
 
-const Users = () => {
+const Townships = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('createdAt');
   const [selected, setSelected] = useState(null);
@@ -67,19 +47,19 @@ const Users = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const [users, setUsers] = useState([]);
+  const [townships, setTownships] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const { apiClient } = useAuth();
   const navigate = useNavigate();
 
-  const fetchUsers = async () => {
+  const fetchTownships = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/user/list/admin');
-      setUsers(response.data.data || []);
+      const response = await apiClient.get('/township/list/admin');
+      setTownships(response.data.data || []);
     } catch (err) {
       setError(err);
     } finally {
@@ -89,7 +69,7 @@ const Users = () => {
 
   useEffect(() => {
     if (apiClient) {
-      fetchUsers();
+      fetchTownships();
     }
   }, [apiClient]);
 
@@ -114,10 +94,10 @@ const Users = () => {
   };
 
   const handleEdit = () => {
-    const userToEdit = users.find(user => user.guid === selected);
-    if (userToEdit) {
+    const townshipToEdit = townships.find(t => t.guid === selected);
+    if (townshipToEdit) {
       navigate('/admin/edit', {
-        state: { entity: userToEdit, type: 'user' }
+        state: { entity: townshipToEdit, type: 'township' }
       });
     }
   };
@@ -125,37 +105,48 @@ const Users = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/user/delete/${selected}`);
+        await apiClient.delete(`/township/delete/${selected}`);
         setSelected(null);
-        fetchUsers();
+        fetchTownships();
       } catch (err) {
-        console.error("Failed to delete user:", err);
+        console.error("Failed to delete township:", err);
       }
     }
   };
 
-  const filteredUsers = useMemo(() =>
-    users.filter(user =>
-      (user.name || '').toLowerCase().includes(searchTerm.toLowerCase())
-    ), [users, searchTerm]
+  const handleCreate = () => {
+    const townshipTemplate = {
+      name: '',
+      provinceName: '',
+    };
+    navigate('/admin/create', {
+      state: { createTemplate: townshipTemplate, type: 'township' }
+    });
+  };
+
+  const filteredTownships = useMemo(() =>
+    townships.filter(t =>
+      (t.name || '').toLowerCase().includes(searchTerm.toLowerCase())
+    ), [townships, searchTerm]
   );
 
   const visibleRows = useMemo(
     () =>
-      [...filteredUsers]
+      [...filteredTownships]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [filteredUsers, order, orderBy, page, rowsPerPage],
+    [filteredTownships, order, orderBy, page, rowsPerPage],
   );
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <AdminTableToolbar
-          title="Users"
+          title="Townships"
           selected={selected} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
+          onCreate={handleCreate}
         />
 
         <Box sx={{ p: 2 }}>
@@ -176,7 +167,7 @@ const Users = () => {
         {isLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}><CircularProgress /></Box>
         ) : error ? (
-          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch users: {error.message}</Alert></Box>
+          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch townships: {error.message}</Alert></Box>
         ) : (
           <>
             <TableContainer sx={{ overflowX: 'auto' }}>
@@ -202,13 +193,8 @@ const Users = () => {
                         selected={isItemSelected}
                         sx={{ cursor: 'pointer' }}
                       >
-                        <TableCell align="left">{row.profile || 'N/A'}</TableCell>
                         <TableCell align="left">{row.name || 'N/A'}</TableCell>
-                        <TableCell align="left">{row.fullName || 'N/A'}</TableCell>
-                        <TableCell align="left">{row.email}</TableCell>
-                        <TableCell align="left">{row.mobile || 'N/A'}</TableCell>
-                        <TableCell align="left">{row.isActive ? 'Yes' : 'No'}</TableCell>
-                        <TableCell align="left">{row.isBlocked ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{row.provinceName || 'N/A'}</TableCell>
                         <TableCell align="left">{new Date(row.createdAt).toLocaleDateString()}</TableCell>
                       </TableRow>
                     );
@@ -219,7 +205,7 @@ const Users = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={filteredUsers.length}
+              count={filteredTownships.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -232,4 +218,4 @@ const Users = () => {
   );
 }
 
-export default Users;
+export default Townships;

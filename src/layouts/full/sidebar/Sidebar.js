@@ -1,6 +1,5 @@
 import { useMediaQuery, Box, Drawer } from '@mui/material';
 import SidebarItems from './SidebarItems';
-import { Upgrade } from './Updrade';
 import logo from '../../../assets/images/logos/logo.jpg';
 
 const MSidebar = (props) => {
@@ -39,7 +38,6 @@ const MSidebar = (props) => {
       <Box sx={{ p: 2 }}>
         <SidebarItems />
       </Box>
-      <Upgrade />
     </Box>
   );
 

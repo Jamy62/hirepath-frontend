@@ -50,7 +50,7 @@ const RecentTransactions = () => {
             </TimelineSeparator>
             <TimelineContent>
               <Typography fontWeight="600">New sale recorded</Typography>{' '}
-              <Link href="/" underline="none">
+              <Link href="/public" underline="none">
                 #ML-3467
               </Link>
             </TimelineContent>
@@ -71,7 +71,7 @@ const RecentTransactions = () => {
             </TimelineSeparator>
             <TimelineContent>
               <Typography fontWeight="600">New sale recorded</Typography>{' '}
-              <Link href="/" underline="none">
+              <Link href="/public" underline="none">
                 #ML-3467
               </Link>
             </TimelineContent>

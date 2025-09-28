@@ -26,32 +26,24 @@ function getComparator(order, orderBy) {
 
 const titles = [
   {
-    id: 'profile',
-    label: 'Profile',
-  },
-  {
     id: 'name',
     label: 'Name',
   },
   {
-    id: 'fullName',
-    label: 'Full Name',
+    id: 'logo',
+    label: 'Logo',
   },
   {
     id: 'email',
     label: 'Email',
   },
   {
-    id: 'mobile',
-    label: 'Mobile',
+    id: 'phone',
+    label: 'Phone',
   },
   {
-    id: 'isActive',
-    label: 'Active',
-  },
-  {
-    id: 'isBlocked',
-    label: 'Blocked',
+    id: 'verificationStatus',
+    label: 'Status',
   },
   {
     id: 'createdAt',
@@ -59,7 +51,7 @@ const titles = [
   }
 ];
 
-const Users = () => {
+const Companies = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('createdAt');
   const [selected, setSelected] = useState(null);
@@ -67,19 +59,19 @@ const Users = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const [users, setUsers] = useState([]);
+  const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const { apiClient } = useAuth();
   const navigate = useNavigate();
 
-  const fetchUsers = async () => {
+  const fetchCompanies = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/user/list/admin');
-      setUsers(response.data.data || []);
+      const response = await apiClient.get('/company/list/admin');
+      setCompanies(response.data.data || []);
     } catch (err) {
       setError(err);
     } finally {
@@ -89,7 +81,7 @@ const Users = () => {
 
   useEffect(() => {
     if (apiClient) {
-      fetchUsers();
+      fetchCompanies();
     }
   }, [apiClient]);
 
@@ -114,10 +106,10 @@ const Users = () => {
   };
 
   const handleEdit = () => {
-    const userToEdit = users.find(user => user.guid === selected);
-    if (userToEdit) {
+    const companyToEdit = companies.find(company => company.guid === selected);
+    if (companyToEdit) {
       navigate('/admin/edit', {
-        state: { entity: userToEdit, type: 'user' }
+        state: { entity: companyToEdit, type: 'company' }
       });
     }
   };
@@ -125,34 +117,34 @@ const Users = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/user/delete/${selected}`);
+        await apiClient.delete(`/company/delete/${selected}`);
         setSelected(null);
-        fetchUsers();
+        fetchCompanies();
       } catch (err) {
-        console.error("Failed to delete user:", err);
+        console.error("Failed to delete company:", err);
       }
     }
   };
 
-  const filteredUsers = useMemo(() =>
-    users.filter(user =>
-      (user.name || '').toLowerCase().includes(searchTerm.toLowerCase())
-    ), [users, searchTerm]
+  const filteredCompanies = useMemo(() =>
+    companies.filter(company =>
+      (company.name || '').toLowerCase().includes(searchTerm.toLowerCase())
+    ), [companies, searchTerm]
   );
 
   const visibleRows = useMemo(
     () =>
-      [...filteredUsers]
+      [...filteredCompanies]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [filteredUsers, order, orderBy, page, rowsPerPage],
+    [filteredCompanies, order, orderBy, page, rowsPerPage],
   );
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <AdminTableToolbar
-          title="Users"
+          title="Companies"
           selected={selected} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
@@ -176,7 +168,7 @@ const Users = () => {
         {isLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}><CircularProgress /></Box>
         ) : error ? (
-          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch users: {error.message}</Alert></Box>
+          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch companies: {error.message}</Alert></Box>
         ) : (
           <>
             <TableContainer sx={{ overflowX: 'auto' }}>
@@ -202,13 +194,12 @@ const Users = () => {
                         selected={isItemSelected}
                         sx={{ cursor: 'pointer' }}
                       >
-                        <TableCell align="left">{row.profile || 'N/A'}</TableCell>
+                        {/* Corrected table cells for companies */}
                         <TableCell align="left">{row.name || 'N/A'}</TableCell>
-                        <TableCell align="left">{row.fullName || 'N/A'}</TableCell>
-                        <TableCell align="left">{row.email}</TableCell>
-                        <TableCell align="left">{row.mobile || 'N/A'}</TableCell>
-                        <TableCell align="left">{row.isActive ? 'Yes' : 'No'}</TableCell>
-                        <TableCell align="left">{row.isBlocked ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{row.logo || 'N/A'}</TableCell>
+                        <TableCell align="left">{row.email || 'N/A'}</TableCell>
+                        <TableCell align="left">{row.phone || 'N/A'}</TableCell>
+                        <TableCell align="left">{row.verificationStatus || 'N/A'}</TableCell>
                         <TableCell align="left">{new Date(row.createdAt).toLocaleDateString()}</TableCell>
                       </TableRow>
                     );
@@ -219,7 +210,7 @@ const Users = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={filteredUsers.length}
+              count={filteredCompanies.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -232,4 +223,4 @@ const Users = () => {
   );
 }
 
-export default Users;
+export default Companies;
