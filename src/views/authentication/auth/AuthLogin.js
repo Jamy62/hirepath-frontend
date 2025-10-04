@@ -20,7 +20,6 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
     password: ''
   });
   const [errors, setErrors] = useState({});
-
   const { login } = useAuth();
   const navigate = useNavigate();
 

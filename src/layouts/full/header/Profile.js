@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
@@ -14,12 +14,12 @@ import {
 import { IconListCheck, IconMail, IconUser } from '@tabler/icons-react';
 
 import ProfileImg from 'src/assets/images/profile/user-1.jpg';
-import {useAuth} from "src/contexts/AuthContext.js";
+import { useAuth } from "src/contexts/AuthContext.js";
 
 const Profile = () => {
-  const [anchorEl2, setAnchorEl2] = useState(null);
-  const { logout } = useAuth();
+  const { logout, imageUrl } = useAuth();
   const navigate = useNavigate();
+  const [anchorEl2, setAnchorEl2] = useState(null);
 
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
@@ -48,7 +48,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={ProfileImg}
+          src={imageUrl}
           alt={ProfileImg}
           sx={{
             width: 35,

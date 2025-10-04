@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback, useEffect } from "react";
 import axios from 'axios';
+import ProfileImg from "../assets/images/profile/user-1.jpg";
 
 const AuthContext = createContext(undefined);
 
@@ -9,6 +10,7 @@ export const apiClient = axios.create({
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [imageUrl, setImageUrl] = useState(ProfileImg);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -31,7 +33,23 @@ export const AuthProvider = ({ children }) => {
       const token = response.data.data.token;
       const user = response.data.data.user;
 
-      if (token) {
+      if (token && user) {
+        apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        if (user.profile) {
+          try {
+            const response = await apiClient.get(`/files/download/images/${user.profile}`, {
+              responseType: 'blob',
+            });
+
+            const tempUrl = URL.createObjectURL(response.data);
+            setImageUrl(tempUrl);
+          } catch (e) {
+            console.log("Failed to fetch user profile image:", e, ". Default profile used");
+            setImageUrl(ProfileImg);
+          }
+        }
+
         setToken(token);
         setUser(user);
       }
@@ -85,7 +103,7 @@ export const AuthProvider = ({ children }) => {
   }, [logout]);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated: !!token, user, token, apiClient, login, register, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated: !!token, user, imageUrl, token, apiClient, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
