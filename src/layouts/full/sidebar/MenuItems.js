@@ -11,7 +11,8 @@ import {
   IconCreditCard,
   IconMap,
   IconMapPin,
-  IconListDetails
+  IconListDetails,
+  IconDeviceDesktop
 } from '@tabler/icons-react';
 
 import { uniqueId } from 'lodash';
@@ -26,14 +27,19 @@ const Menuitems = [
   {
     id: uniqueId(),
     title: 'Admin Tables',
-    icon: IconListDetails, // Icon for the parent dropdown item
-    // This children array creates the sub-menu
+    icon: IconListDetails,
     children: [
       {
         id: uniqueId(),
         title: 'Users',
         icon: IconUsers,
         href: '/admin/users',
+      },
+      {
+        id: uniqueId(),
+        title: 'Admins',
+        icon: IconDeviceDesktop,
+        href: '/admin/admins',
       },
       {
         id: uniqueId(),

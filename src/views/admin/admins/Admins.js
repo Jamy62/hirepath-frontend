@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/contexts/AuthContext';
-import { fetchProfile } from 'src/utils/ImageUtils.js'
 import {
   Box,
   Table,
@@ -20,6 +19,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import AdminTableToolbar from 'src/components/table/AdminTableToolbar.js';
 import AdminTableHead from 'src/components/table/AdminTableHead.js';
+import {fetchProfile} from "../../../utils/ImageUtils.js";
 import DefaultProfile from "../../../assets/images/profile/profile.jpg";
 
 function descendingComparator(a, b, orderBy) {
@@ -73,7 +73,7 @@ const titles = [
   }
 ];
 
-const Users = () => {
+const Admins = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('createdAt');
   const [selected, setSelected] = useState(null);
@@ -81,27 +81,27 @@ const Users = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const [users, setUsers] = useState([]);
+  const [admins, setAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const { apiClient } = useAuth();
   const navigate = useNavigate();
 
-  const fetchUsers = async () => {
+  const fetchAdmins = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/user/user-list/admin');
-      const userList = response.data.data || [];
-      const userListUpdated = await Promise.all(
-        userList.map(async (u) => {
-          const imageUrl = await fetchProfile(apiClient, u.profile);
-          u.profile = imageUrl;
-          return { ...u };
+      const response = await apiClient.get('/user/admin-list/admin');
+      const adminList = response.data.data || [];
+      const adminListUpdated = await Promise.all(
+        adminList.map(async (a) => {
+          const imageUrl = await fetchProfile(apiClient, a.profile);
+          a.profile = imageUrl;
+          return { ...a };
         })
       )
-      setUsers(userListUpdated);
+      setAdmins(adminListUpdated);
     } catch (err) {
       setError(err);
     } finally {
@@ -111,7 +111,7 @@ const Users = () => {
 
   useEffect(() => {
     if (apiClient) {
-      fetchUsers();
+      fetchAdmins();
     }
   }, [apiClient]);
 
@@ -136,10 +136,10 @@ const Users = () => {
   };
 
   const handleEdit = () => {
-    const userToEdit = users.find(user => user.guid === selected);
-    if (userToEdit) {
-      navigate('/admin/edit', {
-        state: { entity: userToEdit, type: 'user' }
+    const adminToEdit = admins.find(admin => admin.guid === selected);
+    if (adminToEdit) {
+      navigate('/user/edit', {
+        state: { entity: adminToEdit, type: 'user' }
       });
     }
   };
@@ -149,32 +149,32 @@ const Users = () => {
       try {
         await apiClient.delete(`/user/delete/${selected}`);
         setSelected(null);
-        fetchUsers();
+        fetchAdmins();
       } catch (err) {
-        console.error("Failed to delete user:", err);
+        console.error("Failed to delete admin:", err);
       }
     }
   };
 
-  const filteredUsers = useMemo(() =>
-    users.filter(user =>
-      (user.name || '').toLowerCase().includes(searchTerm.toLowerCase())
-    ), [users, searchTerm]
+  const filteredAdmins = useMemo(() =>
+    admins.filter(admin =>
+      (admin.name || '').toLowerCase().includes(searchTerm.toLowerCase())
+    ), [admins, searchTerm]
   );
 
   const visibleRows = useMemo(
     () =>
-      [...filteredUsers]
+      [...filteredAdmins]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [filteredUsers, order, orderBy, page, rowsPerPage],
+    [filteredAdmins, order, orderBy, page, rowsPerPage],
   );
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <AdminTableToolbar
-          title="Users"
+          title="Admins"
           selected={selected} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
@@ -198,7 +198,7 @@ const Users = () => {
         {isLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}><CircularProgress /></Box>
         ) : error ? (
-          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch users: {error.message}</Alert></Box>
+          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch admins: {error.message}</Alert></Box>
         ) : (
           <>
             <TableContainer sx={{ overflowX: 'auto' }}>
@@ -250,7 +250,7 @@ const Users = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={filteredUsers.length}
+              count={filteredAdmins.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -263,4 +263,4 @@ const Users = () => {
   );
 }
 
-export default Users;
+export default Admins;

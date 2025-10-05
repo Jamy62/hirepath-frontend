@@ -10,10 +10,8 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material';
-
 import { IconListCheck, IconMail, IconUser } from '@tabler/icons-react';
-
-import ProfileImg from 'src/assets/images/profile/user-1.jpg';
+import DefaultProfile from 'src/assets/images/profile/profile.jpg';
 import { useAuth } from "src/contexts/AuthContext.js";
 
 const Profile = () => {
@@ -35,7 +33,7 @@ const Profile = () => {
   return (
     <Box>
       <IconButton
-        size="large"
+        size="medium"
         aria-label="show 11 new notifications"
         color="inherit"
         aria-controls="msgs-menu"
@@ -49,10 +47,10 @@ const Profile = () => {
       >
         <Avatar
           src={imageUrl}
-          alt={ProfileImg}
+          alt={DefaultProfile}
           sx={{
-            width: 35,
-            height: 35,
+            width: 40,
+            height: 40,
           }}
         />
       </IconButton>

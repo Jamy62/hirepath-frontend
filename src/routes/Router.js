@@ -10,6 +10,7 @@ const BlankLayout = Loadable(lazy(() => import('../layouts/blank/BlankLayout.js'
 
 const Dashboard = Loadable(lazy(() => import('../views/admin/dashboard/Dashboard.js')));
 const Users = Loadable(lazy(() => import('../views/admin/Users/Users.js')));
+const Admins = Loadable(lazy(() => import('../views/admin/admins/Admins.js')))
 const Plans = Loadable(lazy(() => import('../views/admin/plans/Plans.js')));
 const Companies = Loadable(lazy(() => import('../views/admin/companies/Companies.js')));
 const ExperienceLevels = Loadable(lazy(() => import('../views/admin/experience-levels/ExperienceLevels.js')));
@@ -40,6 +41,7 @@ const Router = [
       { path: '/', element: <Navigate to="/admin/dashboard" /> },
       { path: '/admin/dashboard', exact: true, element: <Dashboard /> },
       { path: '/admin/users', exact: true, element: <Users /> },
+      { path: '/admin/admins', exact: true, element: <Admins /> },
       { path: '/admin/plans', exact: true, element: <Plans /> },
       { path: '/admin/companies', exact: true, element: <Companies /> },
       { path: '/admin/experience-levels', exact: true, element: <ExperienceLevels /> },

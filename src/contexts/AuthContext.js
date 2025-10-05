@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, useEffect } from "react";
 import axios from 'axios';
-import ProfileImg from "../assets/images/profile/user-1.jpg";
+import DefaultProfile from 'src/assets/images/profile/profile.jpg';
 
 const AuthContext = createContext(undefined);
 
@@ -9,8 +9,8 @@ export const apiClient = axios.create({
 });
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [imageUrl, setImageUrl] = useState(ProfileImg);
+  const [user, setUser] = useState(localStorage.getItem('user'));
+  const [imageUrl, setImageUrl] = useState(localStorage.getItem('imageUrl'));
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -18,11 +18,17 @@ export const AuthProvider = ({ children }) => {
       apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       localStorage.setItem('token', token);
     }
+    if (user) {
+      localStorage.setItem('user', user);
+    }
+    if (imageUrl) {
+      localStorage.setItem('imageUrl', imageUrl);
+    }
     else {
       delete apiClient.defaults.headers.common['Authorization'];
       localStorage.removeItem('token');
     }
-  }, [token]);
+  }, [token, user, imageUrl]);
 
   const login = useCallback(async (email, password) => {
     try {
@@ -46,8 +52,11 @@ export const AuthProvider = ({ children }) => {
             setImageUrl(tempUrl);
           } catch (e) {
             console.log("Failed to fetch user profile image:", e, ". Default profile used");
-            setImageUrl(ProfileImg);
+            setImageUrl(DefaultProfile);
           }
+        }
+        else {
+          setImageUrl(DefaultProfile);
         }
 
         setToken(token);
