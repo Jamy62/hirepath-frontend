@@ -52,12 +52,11 @@ const DynamicCreate = () => {
         throw new Error('Entity type is missing.');
       }
       const dataToSend = { ...formData };
-
       await apiClient.post(`/${type}/create/admin`, dataToSend);
-      
+
       navigate(-1);
     } catch (error) {
-      setCreateError(error);
+      setCreateError(error.response.data.message);
     } finally {
       setIsCreating(false);
     }
@@ -116,7 +115,7 @@ const DynamicCreate = () => {
 
         {createError && (
           <Alert severity="error" sx={{ mt: 3 }}>
-            Failed to create: {createError.message}
+            {createError}
           </Alert>
         )}
 

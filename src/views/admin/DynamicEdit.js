@@ -94,7 +94,7 @@ const DynamicEdit = () => {
       await apiClient.put(`/${type}/update/admin/${entity.guid}`, dataToSend);
       navigate(-1);
     } catch (error) {
-      setUpdateError(error);
+      setUpdateError(error.response.data.message);
     } finally {
       setIsUpdating(false);
     }
@@ -191,7 +191,7 @@ const DynamicEdit = () => {
 
         {updateError && (
           <Alert severity="error" sx={{ mt: 3 }}>
-            Failed to update: {updateError.message}
+            {updateError}
           </Alert>
         )}
 

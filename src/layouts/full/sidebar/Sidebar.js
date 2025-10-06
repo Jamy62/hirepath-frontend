@@ -9,7 +9,7 @@ const MSidebar = (props) => {
 
   const scrollbarStyles = {
     '&::-webkit-scrollbar': {
-      width: '7px',
+      width: '0',
     },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: '#eff2f7',

@@ -58,7 +58,7 @@ const Languages = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/language/list/admin');
+      const response = await apiClient.get('/language/list');
       setLanguages(response.data.data || []);
     } catch (err) {
       setError(err);

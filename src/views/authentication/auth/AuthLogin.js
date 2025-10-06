@@ -74,9 +74,10 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
           {errors.api && <Alert severity="error" sx={{ mb: 2 }}>{errors.api}</Alert>}
 
           <Box>
-            <Typography variant="subtitle1" fontWeight={600} spacing={100} component="label" htmlFor='email' mb="100px">
-              Email
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='email' mb="5px">Email</Typography>
+              {errors.email && <Typography color="error" variant="caption">{errors.email}</Typography>}
+            </Box>
             <CustomTextField
               id="email"
               name="email"
@@ -84,14 +85,13 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
               onChange={handleChange}
               variant="outlined"
               fullWidth
-              error={!!errors.email}
-              helperText={errors.email}
             />
           </Box>
           <Box mt="25px">
-            <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='password' mb="5px">
-              Password
-            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='password' mb="5px">Password</Typography>
+              {errors.password && <Typography color="error" variant="caption">{errors.password}</Typography>}
+            </Box>
             <CustomTextField
               id="password"
               name="password"
@@ -100,8 +100,6 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
               onChange={handleChange}
               variant="outlined"
               fullWidth
-              error={!!errors.password}
-              helperText={errors.password}
             />
           </Box>
           <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>

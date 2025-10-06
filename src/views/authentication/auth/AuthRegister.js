@@ -15,6 +15,7 @@ import CustomTextField from '../../../components/forms/theme-elements/CustomText
 const AuthRegister = ({ title, subtitle, subtext }) => {
     const [formData, setFormData] = useState({
         name: '',
+        fullName: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -32,6 +33,10 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
         let tempErrors = {};
         if (!formData.name) {
             tempErrors.name = "Name is required.";
+        }
+
+        if (!formData.fullName) {
+          tempErrors.fullName = "Full name is required.";
         }
 
         if (!formData.email) {
@@ -84,7 +89,10 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                 <Stack>
                     {errors.api && <Alert severity="error" sx={{ mb: 2 }}>{errors.api}</Alert>}
                     <Box>
-                        <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='name' mb="5px">Name</Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='name' mb="5px">Name</Typography>
+                            {errors.name && <Typography color="error" variant="caption">{errors.name}</Typography>}
+                        </Box>
                         <CustomTextField
                             id="name"
                             name="name"
@@ -92,11 +100,25 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                             onChange={handleChange}
                             variant="outlined"
                             fullWidth
-                            error={!!errors.name}
-                            helperText={errors.name}
                         />
 
-                        <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='email' mb="5px" mt="25px">Email Address</Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '5px' }}>
+                            <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='fullName' mb="5px">Full Name</Typography>
+                            {errors.fullName && <Typography color="error" variant="caption">{errors.fullName}</Typography>}
+                        </Box>
+                        <CustomTextField
+                          id="fullName"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={handleChange}
+                          variant="outlined"
+                          fullWidth
+                        />
+
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '5px' }}>
+                            <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='email' mb="5px">Email Address</Typography>
+                            {errors.email && <Typography color="error" variant="caption">{errors.email}</Typography>}
+                        </Box>
                         <CustomTextField
                             id="email"
                             name="email"
@@ -104,11 +126,12 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                             onChange={handleChange}
                             variant="outlined"
                             fullWidth
-                            error={!!errors.email}
-                            helperText={errors.email}
                         />
 
-                        <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='password' mb="5px" mt="25px">Password</Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '5px' }}>
+                            <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='password' mb="5px">Password</Typography>
+                            {errors.password && <Typography color="error" variant="caption">{errors.password}</Typography>}
+                        </Box>
                         <CustomTextField
                             id="password"
                             name="password"
@@ -117,11 +140,12 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                             onChange={handleChange}
                             variant="outlined"
                             fullWidth
-                            error={!!errors.password}
-                            helperText={errors.password}
                         />
 
-                        <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='confirmPassword' mb="5px" mt="25px">Confirm Password</Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: '5px' }}>
+                            <Typography variant="subtitle1" fontWeight={600} component="label" htmlFor='confirmPassword' mb="5px">Confirm Password</Typography>
+                            {errors.confirmPassword && <Typography color="error" variant="caption">{errors.confirmPassword}</Typography>}
+                        </Box>
                         <CustomTextField
                             id="confirmPassword"
                             name="confirmPassword"
@@ -130,8 +154,6 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                             onChange={handleChange}
                             variant="outlined"
                             fullWidth
-                            error={!!errors.confirmPassword}
-                            helperText={errors.confirmPassword}
                         />
                     </Box>
                 </Stack>
