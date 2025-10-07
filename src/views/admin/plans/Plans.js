@@ -74,7 +74,7 @@ const Plans = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/plan/list/admin');
+      const response = await apiClient.get('/plan/list');
       setPlans(response.data.data || []);
     } catch (err) {
       setError(err);
