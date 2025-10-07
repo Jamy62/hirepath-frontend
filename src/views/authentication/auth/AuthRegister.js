@@ -67,7 +67,7 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
         e.preventDefault();
         if (validate()) {
             try {
-                await register(formData.name, formData.email, formData.password);
+                await register(formData.name, formData.email, formData.fullName, formData.password);
                 navigate('/auth/login');
             } catch (err) {
                 setErrors({ api: 'Registration failed. Please try again.' });

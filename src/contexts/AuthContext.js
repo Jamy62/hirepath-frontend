@@ -71,12 +71,13 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const register = useCallback(async (name, email, password) => {
+  const register = useCallback(async (name, email, fullName, password) => {
     try {
       await apiClient.post('/user/register', {
         email,
         password,
-        name
+        name,
+        fullName
       });
     } catch (e) {
       console.error('Registration Api failed', e);
