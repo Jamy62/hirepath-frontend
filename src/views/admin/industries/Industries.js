@@ -105,7 +105,7 @@ const Industries = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/industry/delete/${selected}`);
+        await apiClient.delete(`/industry/delete/admin/${selected}`);
         setSelected(null);
         fetchIndustries();
       } catch (err) {

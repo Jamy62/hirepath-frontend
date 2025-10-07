@@ -18,7 +18,7 @@ const Industries = Loadable(lazy(() => import('../views/admin/industries/Industr
 const JobFunctions = Loadable(lazy(() => import('../views/admin/jobfunctions/JobFunctions.js')));
 const JobTypes = Loadable(lazy(() => import('../views/admin/jobtypes/JobTypes.js')));
 const Languages = Loadable(lazy(() => import('../views/admin/languages/Languages.js')));
-const PaymentMethods = Loadable(lazy(() => import('../views/admin/payment-methods/PaymentMethods.js')));
+const PaymentMethods = Loadable(lazy(() => import('../views/admin/paymenttypes/./PaymentTypes')));
 const Provinces = Loadable(lazy(() => import('../views/admin/provinces/Provinces.js')));
 const Townships = Loadable(lazy(() => import('../views/admin/townships/Townships.js')));
 
@@ -49,7 +49,7 @@ const Router = [
       { path: 'admin/job-functions', exact: true, element: <JobFunctions /> },
       { path: 'admin/job-types', exact: true, element: <JobTypes /> },
       { path: 'admin/languages', exact: true, element: <Languages /> },
-      { path: 'admin/payment-methods', exact: true, element: <PaymentMethods /> },
+      { path: 'admin/paymenttypes', exact: true, element: <PaymentMethods /> },
       { path: 'admin/provinces', exact: true, element: <Provinces /> },
       { path: 'admin/townships', exact: true, element: <Townships /> },
 

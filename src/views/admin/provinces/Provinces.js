@@ -101,7 +101,7 @@ const Provinces = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/province/delete/${selected}`);
+        await apiClient.delete(`/province/delete/admin/${selected}`);
         setSelected(null);
         fetchProvinces();
       } catch (err) {

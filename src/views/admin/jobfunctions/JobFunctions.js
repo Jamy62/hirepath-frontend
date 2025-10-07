@@ -104,7 +104,7 @@ const JobFunctions = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/job-function/delete/${selected}`);
+        await apiClient.delete(`/job-function/delete/admin/${selected}`);
         setSelected(null);
         fetchJobFunctions();
       } catch (err) {

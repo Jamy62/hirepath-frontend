@@ -147,7 +147,7 @@ const Users = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/user/delete/${selected}`);
+        await apiClient.delete(`/user/delete/admin/${selected}`);
         setSelected(null);
         fetchUsers();
       } catch (err) {

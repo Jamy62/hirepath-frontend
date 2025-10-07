@@ -117,7 +117,7 @@ const Companies = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/company/delete/${selected}`);
+        await apiClient.delete(`/company/delete/admin/${selected}`);
         setSelected(null);
         fetchCompanies();
       } catch (err) {

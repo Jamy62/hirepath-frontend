@@ -68,7 +68,7 @@ const DynamicEdit = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
   
-  const excludedFields = ['guid', 'id', 'profile', 'roleName', 'roleGuid', 'provinceGuid', 'provinceName'];
+  const excludedFields = ['guid', 'id', 'profile', 'roleName', 'roleGuid', 'provinceGuid', 'provinceName', 'updatedAt'];
 
   const handleSubmit = async (event) => {
     event.preventDefault();

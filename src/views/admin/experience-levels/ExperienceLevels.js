@@ -105,7 +105,7 @@ const ExperienceLevels = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/experience-level/delete/${selected}`);
+        await apiClient.delete(`/experience-level/delete/admin/${selected}`);
         setSelected(null);
         fetchExperienceLevels();
       } catch (err) {

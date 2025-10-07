@@ -39,7 +39,7 @@ const titles = [
   }
 ];
 
-const PaymentMethods = () => {
+const PaymentTypes = () => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('createdAt');
   const [selected, setSelected] = useState(null);
@@ -47,19 +47,19 @@ const PaymentMethods = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const [paymentMethods, setPaymentMethods] = useState([]);
+  const [paymentTypes, setPaymentTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const { apiClient } = useAuth();
   const navigate = useNavigate();
 
-  const fetchPaymentMethods = async () => {
+  const fetchPaymentTypes = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/payment-method/list/admin');
-      setPaymentMethods(response.data.data || []);
+      const response = await apiClient.get('/payment-type/list/admin');
+      setPaymentTypes(response.data.data || []);
     } catch (err) {
       setError(err);
     } finally {
@@ -69,7 +69,7 @@ const PaymentMethods = () => {
 
   useEffect(() => {
     if (apiClient) {
-      fetchPaymentMethods();
+      fetchPaymentTypes();
     }
   }, [apiClient]);
 
@@ -94,10 +94,10 @@ const PaymentMethods = () => {
   };
 
   const handleEdit = () => {
-    const methodToEdit = paymentMethods.find(method => method.guid === selected);
-    if (methodToEdit) {
+    const typeToEdit = paymentTypes.find(type => type.guid === selected);
+    if (typeToEdit) {
       navigate('/admin/edit', {
-        state: { entity: methodToEdit, type: 'payment-method' }
+        state: { entity: typeToEdit, type: 'payment-type' }
       });
     }
   };
@@ -105,44 +105,44 @@ const PaymentMethods = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/payment-method/delete/${selected}`);
+        await apiClient.delete(`/payment-type/delete/admin/${selected}`);
         setSelected(null);
-        fetchPaymentMethods();
+        fetchPaymentTypes();
       } catch (err) {
-        console.error("Failed to delete payment method:", err);
+        console.error("Failed to delete payment type:", err);
       }
     }
   };
 
   const handleCreate = () => {
-    const methodTemplate = {
+    const typeTemplate = {
       name: '',
       description: '',
     };
     navigate('/admin/create', {
-      state: { createTemplate: methodTemplate, type: 'payment-method' }
+      state: { createTemplate: typeTemplate, type: 'payment-type' }
     });
   };
 
-  const filteredPaymentMethods = useMemo(() =>
-    paymentMethods.filter(method =>
-      (method.name || '').toLowerCase().includes(searchTerm.toLowerCase())
-    ), [paymentMethods, searchTerm]
+  const filteredPaymentTypes = useMemo(() =>
+    paymentTypes.filter(type =>
+      (type.name || '').toLowerCase().includes(searchTerm.toLowerCase())
+    ), [paymentTypes, searchTerm]
   );
 
   const visibleRows = useMemo(
     () =>
-      [...filteredPaymentMethods]
+      [...filteredPaymentTypes]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [filteredPaymentMethods, order, orderBy, page, rowsPerPage],
+    [filteredPaymentTypes, order, orderBy, page, rowsPerPage],
   );
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <AdminTableToolbar
-          title="Payment Methods"
+          title="Payment Types"
           selected={selected} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
@@ -167,7 +167,7 @@ const PaymentMethods = () => {
         {isLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}><CircularProgress /></Box>
         ) : error ? (
-          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch payment methods: {error.message}</Alert></Box>
+          <Box sx={{ p: 2 }}><Alert severity="error">Failed to fetch payment types: {error.message}</Alert></Box>
         ) : (
           <>
             <TableContainer sx={{ overflowX: 'auto' }}>
@@ -205,7 +205,7 @@ const PaymentMethods = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={filteredPaymentMethods.length}
+              count={filteredPaymentTypes.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -218,4 +218,4 @@ const PaymentMethods = () => {
   );
 }
 
-export default PaymentMethods;
+export default PaymentTypes;

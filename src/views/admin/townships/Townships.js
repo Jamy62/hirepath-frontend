@@ -105,7 +105,7 @@ const Townships = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/township/delete/${selected}`);
+        await apiClient.delete(`/township/delete/admin/${selected}`);
         setSelected(null);
         fetchTownships();
       } catch (err) {

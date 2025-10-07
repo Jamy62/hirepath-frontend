@@ -87,7 +87,7 @@ const Menuitems = [
         id: uniqueId(),
         title: 'Payment Methods',
         icon: IconCreditCard,
-        href: '/admin/payment-methods',
+        href: '/admin/paymenttypes',
       },
       {
         id: uniqueId(),

@@ -121,7 +121,7 @@ const Plans = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/plan/delete/${selected}`);
+        await apiClient.delete(`/plan/delete/admin/${selected}`);
         setSelected(null);
         fetchPlans();
       } catch (err) {

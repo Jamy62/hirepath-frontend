@@ -105,7 +105,7 @@ const JobTypes = () => {
   const handleDelete = async () => {
     if (selected) {
       try {
-        await apiClient.delete(`/job-type/delete/${selected}`);
+        await apiClient.delete(`/job-type/delete/admin/${selected}`);
         setSelected(null);
         fetchJobTypes();
       } catch (err) {
