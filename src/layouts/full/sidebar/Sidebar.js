@@ -1,9 +1,12 @@
 import { useMediaQuery, Box, Drawer } from '@mui/material';
+import { Link } from 'react-router-dom';
 import SidebarItems from './SidebarItems';
 import logo from '../../../assets/images/logos/logo.jpg';
+import { useAuth } from 'src/contexts/AuthContext';
 
 const MSidebar = (props) => {
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
+  const { role } = useAuth();
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const sidebarWidth = '270px';
   const collapsedSidebarWidth = '80px';
 
@@ -17,9 +20,18 @@ const MSidebar = (props) => {
     },
   };
 
+  const getLogoLink = () => {
+    if (role === 'COMPANY') {
+      return '/company/dashboard';
+    }
+    return '/public/jobs';
+  };
+
   const Logo = (
     <Box sx={{ p: 1.4, display: 'flex', justifyContent: 'center' }}>
-      <img src={logo} alt="logo" width={170}/>
+      <Link to={getLogoLink()}>
+        <img src={logo} alt="logo" width={170} />
+      </Link>
     </Box>
   );
 
@@ -27,7 +39,7 @@ const MSidebar = (props) => {
     <Box sx={{ height: '100%' }}>
       {Logo}
       <Box sx={{ p: 2 }}>
-        <SidebarItems />
+        <SidebarItems items={props.menuItems} />
       </Box>
     </Box>
   );
@@ -36,7 +48,7 @@ const MSidebar = (props) => {
     <Box sx={{ height: '100%' }}>
       {Logo}
       <Box sx={{ p: 2 }}>
-        <SidebarItems />
+        <SidebarItems items={props.menuItems} />
       </Box>
     </Box>
   );
@@ -49,10 +61,11 @@ const MSidebar = (props) => {
         PaperProps={{
           sx: {
             width: props.isSidebarOpen ? sidebarWidth : collapsedSidebarWidth,
-            transition: (theme) => theme.transitions.create('width', {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.enteringScreen,
-            }),
+            transition: (theme) =>
+              theme.transitions.create('width', {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.enteringScreen,
+              }),
             boxSizing: 'border-box',
             border: '0',
             ...scrollbarStyles,

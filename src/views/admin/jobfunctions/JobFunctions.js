@@ -57,7 +57,7 @@ const JobFunctions = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/job-function/list/admin');
+      const response = await apiClient.get('/job-function/list');
       setJobFunctions(response.data.data || []);
     } catch (err) {
       setError(err);

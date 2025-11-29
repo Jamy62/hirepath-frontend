@@ -52,7 +52,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => {
     if (validate()) {
       try {
         await login(formData.email, formData.password);
-        navigate('/admin/dashboard');
+        navigate('/public/jobs');
       } catch (e) {
         setErrors({api: 'Login failed. Incorrect email or password' });
       }

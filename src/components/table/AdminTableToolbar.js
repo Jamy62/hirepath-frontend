@@ -5,9 +5,16 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const AdminTableToolbar = (props) => {
-  const { title, selected, onEdit, onDelete, onCreate } = props;
+  const { title, selected, onEdit, onDelete, onCreate, onView } = props;
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      onDelete();
+    }
+  };
 
   return (
     <Toolbar
@@ -25,16 +32,27 @@ const AdminTableToolbar = (props) => {
           <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
             1 selected
           </Typography>
-          <Tooltip title="Edit">
-            <IconButton onClick={onEdit}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <IconButton onClick={onDelete}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+          {onView && (
+            <Tooltip title="View">
+              <IconButton onClick={onView}>
+                <VisibilityIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+          {onEdit && (
+            <Tooltip title="Edit">
+              <IconButton onClick={onEdit}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+          {onDelete && (
+            <Tooltip title="Delete">
+              <IconButton onClick={handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </>
       ) : (
         <>
@@ -61,6 +79,7 @@ AdminTableToolbar.propTypes = {
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
   onCreate: PropTypes.func,
+  onView: PropTypes.func,
 };
 
 export default AdminTableToolbar;

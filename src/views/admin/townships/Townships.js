@@ -58,7 +58,7 @@ const Townships = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/township/list/admin');
+      const response = await apiClient.get('/township/list');
       setTownships(response.data.data || []);
     } catch (err) {
       setError(err);

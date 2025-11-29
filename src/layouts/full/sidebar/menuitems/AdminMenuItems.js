@@ -12,12 +12,32 @@ import {
   IconMap,
   IconMapPin,
   IconListDetails,
-  IconDeviceDesktop
+  IconDeviceDesktop, IconCheckbox, IconUser, IconListCheck
 } from '@tabler/icons-react';
 
 import { uniqueId } from 'lodash';
 
-const Menuitems = [
+const AdminMenuItems = [
+  {
+    navlabel: true,
+    subheader: 'User Workspace',
+  },
+  {
+    id: uniqueId(),
+    title: 'Find Jobs',
+    icon: IconBriefcase,
+    href: '/public/jobs',
+  },
+  {
+    id: uniqueId(),
+    title: 'My Applications',
+    icon: IconListCheck,
+    href: '/user/applications',
+  },
+  {
+    navlabel: true,
+    subheader: 'Administration',
+  },
   {
     id: uniqueId(),
     title: 'Dashboard',
@@ -50,8 +70,21 @@ const Menuitems = [
       {
         id: uniqueId(),
         title: 'Companies',
-        icon: IconBuilding,
-        href: '/admin/companies',
+        icon: IconListDetails,
+        children: [
+          {
+            id: uniqueId(),
+            title: 'Companies',
+            icon: IconBuilding,
+            href: '/admin/companies',
+          },
+          {
+            id: uniqueId(),
+            title: 'Verifications',
+            icon: IconCheckbox,
+            href: '/admin/companies/verifications',
+          },
+        ]
       },
       {
         id: uniqueId(),
@@ -103,54 +136,6 @@ const Menuitems = [
       },
     ]
   },
-  // {
-  //   navlabel: true,
-  //   subheader: 'Utilities',
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: 'Typography',
-  //   icon: IconTypography,
-  //   href: '/ui/typography',
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: 'Shadow',
-  //   icon: IconCopy,
-  //   href: '/ui/shadow',
-  // },
-  // {
-  //   navlabel: true,
-  //   subheader: 'Auth',
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: 'Login',
-  //   icon: IconLogin,
-  //   href: '/auth/login',
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: 'Register',
-  //   icon: IconUserPlus,
-  //   href: '/auth/register',
-  // },
-  // {
-  //   navlabel: true,
-  //   subheader: 'Extra',
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: 'Icons',
-  //   icon: IconMoodHappy,
-  //   href: '/icons',
-  // },
-  // {
-  //   id: uniqueId(),
-  //   title: 'Sample Page',
-  //   icon: IconAperture,
-  //   href: '/sample-page',
-  // },
 ];
 
-export default Menuitems;
+export default AdminMenuItems;

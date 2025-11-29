@@ -156,6 +156,12 @@ const Users = () => {
     }
   };
 
+  const handleView = () => {
+    if (selected) {
+      navigate(`/user/profile/guest/${selected}`);
+    }
+  };
+
   const filteredUsers = useMemo(() =>
     users.filter(user =>
       (user.name || '').toLowerCase().includes(searchTerm.toLowerCase())
@@ -178,6 +184,7 @@ const Users = () => {
           selected={selected} 
           onEdit={handleEdit} 
           onDelete={handleDelete}
+          onView={handleView}
         />
 
         <Box sx={{ p: 2 }}>
@@ -231,6 +238,7 @@ const Users = () => {
                             sx={{
                               width: 45,
                               height: 45,
+                              border: '1px solid #e0e0e0'
                             }}
                           />
                         </TableCell>

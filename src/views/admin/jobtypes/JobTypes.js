@@ -58,7 +58,7 @@ const JobTypes = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/job-type/list/admin');
+      const response = await apiClient.get('/job-type/list');
       setJobTypes(response.data.data || []);
     } catch (err) {
       setError(err);

@@ -21,10 +21,8 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
         confirmPassword: ''
     });
     const [errors, setErrors] = useState({});
-
     const { register } = useAuth();
     const navigate = useNavigate();
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -59,6 +57,7 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
         else if (formData.password !== formData.confirmPassword) {
             tempErrors.confirmPassword = "Passwords do not match.";
         }
+
         setErrors(tempErrors);
         return Object.keys(tempErrors).length === 0;
     };
@@ -69,8 +68,8 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
             try {
                 await register(formData.name, formData.email, formData.fullName, formData.password);
                 navigate('/auth/login');
-            } catch (err) {
-                setErrors({ api: 'Registration failed. Please try again.' });
+            } catch (e) {
+                setErrors({ api: e.response?.data?.message || 'Registration failed. Please try again.' });
             }
         }
     };
@@ -157,6 +156,7 @@ const AuthRegister = ({ title, subtitle, subtext }) => {
                         />
                     </Box>
                 </Stack>
+
                 <Box mt={3}>
                     <Button color="primary" variant="contained" size="large" fullWidth type="submit">
                         Sign Up

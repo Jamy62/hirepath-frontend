@@ -46,7 +46,7 @@ const Industries = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const [industries, setIndustries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -58,7 +58,7 @@ const Industries = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/industry/list/admin');
+      const response = await apiClient.get('/industry/list');
       setIndustries(response.data.data || []);
     } catch (err) {
       setError(err);
@@ -143,8 +143,8 @@ const Industries = () => {
       <Paper sx={{ width: '100%', mb: 2 }}>
         <AdminTableToolbar
           title="Industries"
-          selected={selected} 
-          onEdit={handleEdit} 
+          selected={selected}
+          onEdit={handleEdit}
           onDelete={handleDelete}
           onCreate={handleCreate}
         />

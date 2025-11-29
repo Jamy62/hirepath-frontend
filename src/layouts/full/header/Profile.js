@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -8,16 +8,38 @@ import {
   IconButton,
   MenuItem,
   ListItemIcon,
-  ListItemText
+  ListItemText, Typography
 } from '@mui/material';
-import { IconListCheck, IconMail, IconUser } from '@tabler/icons-react';
+import {IconBuilding, IconListCheck, IconMail, IconUser} from '@tabler/icons-react';
 import DefaultProfile from 'src/assets/images/profile/profile.jpg';
 import { useAuth } from "src/contexts/AuthContext.js";
 
 const Profile = () => {
-  const { logout, imageUrl } = useAuth();
+  const { logout, userImageUrl, role, companyRole, company, switchBackToUser, token } = useAuth();
   const navigate = useNavigate();
   const [anchorEl2, setAnchorEl2] = useState(null);
+
+  let profileLink;
+  let profileLabel;
+  let ProfileIcon;
+
+  if (role === 'COMPANY') {
+    if (companyRole === 'COMPANY_OWNER' || companyRole === 'COMPANY_ADMIN') {
+      profileLink = '/company/profile';
+      profileLabel = 'Company Profile';
+    }
+    else {
+      profileLink = `/company/profile/guest/${company?.guid}`;
+      profileLabel = 'Company Profile (View Only)';
+    }
+
+    ProfileIcon = IconBuilding;
+  }
+  else {
+    profileLink = '/user/profile';
+    profileLabel = 'My Profile';
+    ProfileIcon = IconUser;
+  }
 
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
@@ -25,16 +47,36 @@ const Profile = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  const handleSwitchBack = async () => {
+    await switchBackToUser();
+    navigate('/user/profile');
+    window.location.reload();
+  };
+
   const handleLogout = async () => {
     logout();
+    navigate('/');
+  }
+
+  const handleLogin = () => {
     navigate('/auth/login');
+  }
+
+  if (!token) {
+    return (
+      <Box>
+        <Button onClick={handleLogin} variant="outlined" color="primary">
+          Login
+        </Button>
+      </Box>
+    );
   }
 
   return (
     <Box>
       <IconButton
         size="medium"
-        aria-label="show 11 new notifications"
         color="inherit"
         aria-controls="msgs-menu"
         aria-haspopup="true"
@@ -46,7 +88,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={imageUrl}
+          src={userImageUrl}
           alt={DefaultProfile}
           sx={{
             width: 40,
@@ -54,9 +96,6 @@ const Profile = () => {
           }}
         />
       </IconButton>
-      {/* ------------------------------------------- */}
-      {/* Message Dropdown */}
-      {/* ------------------------------------------- */}
       <Menu
         id="msgs-menu"
         anchorEl={anchorEl2}
@@ -71,24 +110,24 @@ const Profile = () => {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          component={Link}
+          to={profileLink}
+          onClick={handleClose2}>
           <ListItemIcon>
-            <IconUser width={20} />
+            <ProfileIcon width={20} />
           </ListItemIcon>
-          <ListItemText>My Profile</ListItemText>
+          <ListItemText>{profileLabel}</ListItemText>
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconMail width={20} />
-          </ListItemIcon>
-          <ListItemText>My Account</ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <IconListCheck width={20} />
-          </ListItemIcon>
-          <ListItemText>My Tasks</ListItemText>
-        </MenuItem>
+
+        {role === 'COMPANY' && (
+          <MenuItem onClick={handleSwitchBack}>
+            <ListItemIcon>
+              <IconMail width={20} />
+            </ListItemIcon>
+            <ListItemText>Switch to User</ListItemText>
+          </MenuItem>
+        )}
         <Box mt={1} py={1} px={2}>
           <Button onClick={handleLogout} variant="outlined" color="primary" fullWidth>
             Logout

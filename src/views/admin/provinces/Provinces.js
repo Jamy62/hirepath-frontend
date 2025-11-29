@@ -54,7 +54,7 @@ const Provinces = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/province/list/admin');
+      const response = await apiClient.get('/province/list');
       setProvinces(response.data.data || []);
     } catch (err) {
       setError(err);

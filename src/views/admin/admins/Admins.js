@@ -19,7 +19,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import AdminTableToolbar from 'src/components/table/AdminTableToolbar.js';
 import AdminTableHead from 'src/components/table/AdminTableHead.js';
-import {fetchProfile} from "../../../utils/ImageUtils.js";
+import {fetchProfile} from "src/utils/ImageUtils.js";
 import DefaultProfile from "../../../assets/images/profile/profile.jpg";
 
 function descendingComparator(a, b, orderBy) {
@@ -80,7 +80,7 @@ const Admins = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const [admins, setAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -138,7 +138,7 @@ const Admins = () => {
   const handleEdit = () => {
     const adminToEdit = admins.find(admin => admin.guid === selected);
     if (adminToEdit) {
-      navigate('/user/edit', {
+      navigate('/admin/edit', {
         state: { entity: adminToEdit, type: 'user' }
       });
     }
@@ -153,6 +153,12 @@ const Admins = () => {
       } catch (err) {
         console.error("Failed to delete admin:", err);
       }
+    }
+  };
+
+  const handleView = () => {
+    if (selected) {
+      navigate(`/user/profile/guest/${selected}`);
     }
   };
 
@@ -175,9 +181,10 @@ const Admins = () => {
       <Paper sx={{ width: '100%', mb: 2 }}>
         <AdminTableToolbar
           title="Admins"
-          selected={selected} 
-          onEdit={handleEdit} 
+          selected={selected}
+          onEdit={handleEdit}
           onDelete={handleDelete}
+          onView={handleView}
         />
 
         <Box sx={{ p: 2 }}>
@@ -231,6 +238,7 @@ const Admins = () => {
                             sx={{
                               width: 45,
                               height: 45,
+                              border: '1px solid #e0e0e0'
                             }}
                           />
                         </TableCell>

@@ -27,7 +27,7 @@ const DynamicCreate = () => {
     if (type === 'township' && apiClient) {
       const fetchProvinces = async () => {
         try {
-          const response = await apiClient.get('/province/list/admin');
+          const response = await apiClient.get('/province/list');
           setProvinces(response.data.data || []);
         } catch (err) {
           console.error("Failed to fetch provinces:", err);

@@ -58,7 +58,7 @@ const ExperienceLevels = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/experience-level/list/admin');
+      const response = await apiClient.get('/experience-level/list');
       setExperienceLevels(response.data.data || []);
     } catch (err) {
       setError(err);

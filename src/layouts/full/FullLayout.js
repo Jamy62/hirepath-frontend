@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { styled, Container, Box, Typography, Link, useMediaQuery } from "@mui/material";
+import { styled, Container, Box, Typography, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
-
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
+import { useAuth } from "src/contexts/AuthContext";
+import AdminMenuItems from "./sidebar/menuitems/AdminMenuItems.js";
+import CompanyMenuItems from "./sidebar/menuitems/CompanyMenuItems.js";
+import UserMenuItems from "./sidebar/menuitems/UserMenuItems.js";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -25,23 +28,36 @@ const FullLayout = () => {
   const [isMobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
+  const { role, companyRole } = useAuth();
   const sidebarWidth = '300px';
   const collapsedSidebarWidth = '80px';
 
+  let currentMenu = [];
+
+  if (role === 'COMPANY') {
+    currentMenu = CompanyMenuItems.filter(item => {
+      if (item.title === 'Subscription' || item.title === 'Positions') {
+        return companyRole === 'COMPANY_OWNER'
+      }
+      else if (item.title === 'Applicants') {
+        return companyRole === 'COMPANY_OWNER' || companyRole === 'COMPANY_ADMIN';
+      }
+      return true;
+    });
+  }
+  else if (role === "ADMIN") currentMenu = AdminMenuItems;
+  else if (role === "COMPANY") currentMenu = CompanyMenuItems;
+  else currentMenu = UserMenuItems;
+
   return (
     <MainWrapper className="mainwrapper">
-      {/* ------------------------------------------- */}
-      {/* Sidebar */}
-      {/* ------------------------------------------- */}
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
+        menuItems={currentMenu}
         onSidebarClose={() => setMobileSidebarOpen(false)}
       />
-      {/* ------------------------------------------- */}
-      {/* Main Wrapper */}
-      {/* ------------------------------------------- */}
-      <PageWrapper 
+      <PageWrapper
         className="page-wrapper"
         sx={{
           ...(lgUp && {
@@ -53,52 +69,26 @@ const FullLayout = () => {
           }),
         }}
       >
-        {/* ------------------------------------------- */}
-        {/* Header */}
-        {/* ------------------------------------------- */}
         <Header
           toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
           toggleMobileSidebar={() => setMobileSidebarOpen(true)}
         />
-        {/* ------------------------------------------- */}
-        {/* PageContent */}
-        {/* ------------------------------------------- */}
         <Container
           sx={{
             paddingTop: "20px",
             maxWidth: "1200px",
           }}
         >
-          {/* ------------------------------------------- */}
-          {/* Page Route */}
-          {/* ------------------------------------------- */}
           <Box sx={{ minHeight: "calc(100vh - 170px)" }}>
             <Outlet />
           </Box>
-         
-          {/* ------------------------------------------- */}
-          {/* End Page */}
-          {/* ------------------------------------------- */}
-        </Container>
-        <Box sx={{pt:6, pb:3, display:'flex', justifyContent:'center'}}>
-            <Typography>
-              © 2025 All rights reserved by
-              <Link target="_blank" href="https://www.adminmart.com">
-                <span>
-                  AdminMart.com
-                </span>
-              </Link>
-              </Typography>
-              
-              <Typography>
-                .Distributed by
-              <Link target="_blank" href="https://themewagon.com">
-                <span>
-                  ThemeWagon
-                </span>
-              </Link>
+
+          <Box sx={{ pt: 6, pb: 3, textAlign: 'center' }}>
+            <Typography variant="body2" color="textSecondary">
+              © 2025 HirePath. All rights reserved.
             </Typography>
           </Box>
+        </Container>
       </PageWrapper>
     </MainWrapper>
   );

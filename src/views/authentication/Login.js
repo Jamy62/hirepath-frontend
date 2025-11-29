@@ -1,21 +1,22 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Box, Card, Stack, Typography } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
-import Logo from 'src/layouts/full/shared/logo/Logo';
+import logo from 'src/assets/images/logos/logo.jpg';
 import AuthLogin from './auth/AuthLogin.js';
 
 const Login2 = () => {
   return (
-    <PageContainer title="Login" description="this is Login page">
+    <PageContainer title="Login" description="HirePath Login">
       <Grid container spacing={0} sx={{ height: '100vh' }}>
+
+        {/* Left Side - Different Gradient & Content */}
         <Grid
           item
           lg={6}
           sx={{
-            display: { xs: 'none', lg: 'flex' }, // Hidden on mobile, visible on desktop
-            background: 'linear-gradient(135deg, #0A2749 30%, #007BFF 100%)',
+            display: { xs: 'none', lg: 'flex' },
+            background: 'linear-gradient(135deg, #1e88e5 0%, #3949ab 100%)', // Lighter Blue-Indigo gradient
             color: 'white',
             alignItems: 'center',
             justifyContent: 'center',
@@ -27,11 +28,12 @@ const Login2 = () => {
               Welcome Back
             </Typography>
             <Typography variant="h5">
-              Sign in to access your powerful dashboard.
+              Sign in to access your HirePath dashboard and continue your journey.
             </Typography>
           </Box>
         </Grid>
 
+        {/* Right Side - Login Form */}
         <Grid
           item
           xs={12}
@@ -41,19 +43,19 @@ const Login2 = () => {
           alignItems="center"
         >
           <Card elevation={9} sx={{ p: 4, zIndex: 1, width: '100%', maxWidth: '500px' }}>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <Logo />
+            <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
+              <img src={logo} alt="HirePath" width={170} />
             </Box>
             <AuthLogin
               subtext={
                 <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                  Your Social Campaigns
+                  Access your account
                 </Typography>
               }
               subtitle={
                 <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
                   <Typography color="textSecondary" variant="h6" fontWeight="500">
-                    New to Modernize?
+                    New to HirePath?
                   </Typography>
                   <Typography
                     component={Link}

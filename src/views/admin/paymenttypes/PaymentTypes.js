@@ -46,7 +46,7 @@ const PaymentTypes = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const [paymentTypes, setPaymentTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -58,7 +58,7 @@ const PaymentTypes = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiClient.get('/payment-type/list/admin');
+      const response = await apiClient.get('/payment-type/list');
       setPaymentTypes(response.data.data || []);
     } catch (err) {
       setError(err);
@@ -143,8 +143,8 @@ const PaymentTypes = () => {
       <Paper sx={{ width: '100%', mb: 2 }}>
         <AdminTableToolbar
           title="Payment Types"
-          selected={selected} 
-          onEdit={handleEdit} 
+          selected={selected}
+          onEdit={handleEdit}
           onDelete={handleDelete}
           onCreate={handleCreate}
         />

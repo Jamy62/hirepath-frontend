@@ -3,8 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from 'src/contexts/AuthContext';
 import { Box, Button, TextField, Typography, Paper, Grid, CircularProgress, Alert, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
-// --- Helper Functions --- //
-
 const isDateTimeString = (value) => {
   if (typeof value !== 'string') return false;
   return /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value);
@@ -21,8 +19,6 @@ const formatDateTimeForInput = (dateString) => {
   }
 };
 
-// --- Component --- //
-
 const DynamicEdit = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,7 +29,7 @@ const DynamicEdit = () => {
   const [formData, setFormData] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
   const [updateError, setUpdateError] = useState(null);
-  const [provinces, setProvinces] = useState([]); // Corrected useState
+  const [provinces, setProvinces] = useState([]);
 
   useEffect(() => {
     if (entity) {
