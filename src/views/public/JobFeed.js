@@ -7,7 +7,7 @@ import {
 import { IconMapPin, IconBriefcase, IconCoin, IconClock, IconBuildingSkyscraper } from '@tabler/icons-react';
 import PageContainer from 'src/components/container/PageContainer';
 import { useAuth } from 'src/contexts/AuthContext';
-import FilterTopBar from 'src/components/jobs/FilterTopBar';
+import FilterTopBar from 'src/components/jobs/FilterTopbar.js';
 
 const JobFeed = () => {
   const { apiClient, user } = useAuth();
