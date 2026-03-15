@@ -5,7 +5,7 @@ import DefaultProfile from 'src/assets/images/profile/profile.jpg';
 const AuthContext = createContext(undefined);
 
 export const apiClient = axios.create({
-  baseURL: 'http://jamydev.com/v1'
+  baseURL: 'https://jamydev.com/v1'
 });
 
 const languageGuidMap = {
