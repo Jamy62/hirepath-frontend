@@ -354,7 +354,7 @@ const Profile = () => {
             <Stack direction="row" spacing={4} overflow="auto" py={1}>
               {myCompanies.map((comp) => (
                 <Box key={comp.guid} onClick={() => handleSwitchCompany(comp.guid)} sx={{ cursor: 'pointer', textAlign: 'center', minWidth: '80px', '&:hover': { opacity: 0.8 } }}>
-                  <Avatar src={comp.logo ? `http://localhost:8080/v1/files/download/logo/${comp.logo}` : null} sx={{ width: 64, height: 64, mb: 1, mx: 'auto', bgcolor: 'primary.light' }}><IconBuilding/></Avatar>
+                  <Avatar src={comp.logo ? `https://jamydev.com/v1/files/download/logo/${comp.logo}` : null} sx={{ width: 64, height: 64, mb: 1, mx: 'auto', bgcolor: 'primary.light' }}><IconBuilding/></Avatar>
                   <Typography variant="subtitle2">{comp.name}</Typography>
                 </Box>
               ))}

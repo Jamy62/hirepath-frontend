@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  Box, Grid, Typography, Chip, Button, Avatar, Stack, CircularProgress, Card, CardActionArea
+  Box, Grid, Typography, Chip, Avatar, Stack, CircularProgress, Card, CardActionArea
 } from '@mui/material';
-import { IconMapPin, IconBriefcase, IconCoin, IconClock, IconBuildingSkyscraper } from '@tabler/icons-react';
+import { IconMapPin, IconBriefcase, IconClock, IconBuildingSkyscraper } from '@tabler/icons-react';
 import PageContainer from 'src/components/container/PageContainer';
 import { useAuth } from 'src/contexts/AuthContext';
 import FilterTopBar from 'src/components/jobs/FilterTopbar.js';
@@ -69,7 +69,7 @@ const JobFeed = () => {
 
                   <Grid item>
                     <Avatar
-                      src={job.companyLogo ? `http://localhost:8080/v1/files/download/logo/${job.companyLogo}` : null}
+                      src={job.companyLogo ? `https://jamydev.com/v1/files/download/logo/${job.companyLogo}` : null}
                       variant="rounded"
                       sx={{ width: 65, height: 65, bgcolor: 'grey.100', border: '1px solid #eee' }}
                     >

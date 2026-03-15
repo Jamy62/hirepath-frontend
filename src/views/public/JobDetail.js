@@ -106,7 +106,7 @@ const JobDetail = () => {
 
             <Link to={`/company/profile/guest/${job.companyGuid}`}>
               <Avatar
-                src={job.companyLogo ? `http://localhost:8080/v1/files/download/logo/${job.companyLogo}` : null}
+                src={job.companyLogo ? `https://jamydev.com/v1/files/download/logo/${job.companyLogo}` : null}
                 alt={job.companyName}
                 variant="rounded"
                 sx={{ width: 80, height: 80, mb: 2, bgcolor: 'grey.100', border: '1px solid #eee' }}

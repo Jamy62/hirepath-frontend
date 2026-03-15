@@ -44,7 +44,7 @@ const UserProfileGuest = () => {
       setProfileData(profileRes.data.data);
       if (profileRes.data.data.profile) {
         const timestamp = new Date().getTime();
-        setUserImageUrl(`http://localhost:8080/v1/files/download/images/${profileRes.data.data.profile}?t=${timestamp}`);
+        setUserImageUrl(`https://jamydev.com/v1/files/download/images/${profileRes.data.data.profile}?t=${timestamp}`);
       }
     } catch (err) {
       console.error("Error fetching guest user profile:", err);

@@ -69,7 +69,7 @@ const Applicants = () => {
       const fetchedApplicants = response.data.data || [];
       const applicantsWithProfilePics = fetchedApplicants.map(app => ({
         ...app,
-        profilePictureUrl: app.profilePicture ? `http://localhost:8080/v1/files/download/images/${app.profilePicture}` : DefaultProfile
+        profilePictureUrl: app.profilePicture ? `https://jamydev.com/v1/files/download/images/${app.profilePicture}` : DefaultProfile
       }));
       setApplicants(applicantsWithProfilePics);
     } catch (error) {

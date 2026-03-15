@@ -8,8 +8,8 @@ import DashboardCard from 'src/components/shared/DashboardCard.js';
 import { useAuth } from 'src/contexts/AuthContext';
 import { IconExternalLink } from '@tabler/icons-react';
 
-const getLogoUrl = (filename) => filename ? `http://localhost:8080/v1/files/download/logo/${filename}` : null;
-const getProfileUrl = (filename) => filename ? `http://localhost:8080/v1/files/download/images/${filename}` : null;
+const getLogoUrl = (filename) => filename ? `https://jamydev.com/v1/files/download/logo/${filename}` : null;
+const getProfileUrl = (filename) => filename ? `https://jamydev.com/v1/files/download/images/${filename}` : null;
 
 export const MostPopularJobs = () => {
   const { apiClient } = useAuth();

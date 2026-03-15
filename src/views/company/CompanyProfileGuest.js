@@ -32,8 +32,8 @@ const CompanyProfileGuest = () => {
       setCompanyData(data);
 
       const timestamp = new Date().getTime();
-      if (data.logo) setLogoUrl(`http://localhost:8080/v1/files/download/logo/${data.logo}?t=${timestamp}`);
-      if (data.banner) setBannerUrl(`http://localhost:8080/v1/files/download/banner/${data.banner}?t=${timestamp}`);
+      if (data.logo) setLogoUrl(`https://jamydev.com/v1/files/download/logo/${data.logo}?t=${timestamp}`);
+      if (data.banner) setBannerUrl(`https://jamydev.com/v1/files/download/banner/${data.banner}?t=${timestamp}`);
 
       setLocations(data.locations || []);
     } catch (err) {
@@ -107,7 +107,7 @@ const CompanyProfileGuest = () => {
               {locations.map((loc) => (
                 <Grid item xs={12} sm={6} md={4} key={loc.guid}>
                   <Card variant="outlined">
-                    <CardMedia component="img" height="140" image={loc.photo ? `http://localhost:8080/v1/files/download/location/${loc.photo}` : 'https://via.placeholder.com/300x140'} alt={loc.name} />
+                    <CardMedia component="img" height="140" image={loc.photo ? `https://jamydev.com/v1/files/download/location/${loc.photo}` : 'https://via.placeholder.com/300x140'} alt={loc.name} />
                     <CardContent>
                       <Typography variant="h6">{loc.name}</Typography>
                       <Typography variant="body2" color="text.secondary">{loc.address}</Typography>

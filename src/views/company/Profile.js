@@ -35,8 +35,8 @@ const CompanyProfile = () => {
       setCompanyData(data);
 
       const timestamp = new Date().getTime();
-      if (data.logo) setLogoUrl(`http://localhost:8080/v1/files/download/logo/${data.logo}?t=${timestamp}`);
-      if (data.banner) setBannerUrl(`http://localhost:8080/v1/files/download/banner/${data.banner}?t=${timestamp}`);
+      if (data.logo) setLogoUrl(`https://jamydev.com/v1/files/download/logo/${data.logo}?t=${timestamp}`);
+      if (data.banner) setBannerUrl(`https://jamydev.com/v1/files/download/banner/${data.banner}?t=${timestamp}`);
 
       setLocations(data.locations || []);
     } catch (err) {
@@ -201,7 +201,7 @@ const CompanyProfile = () => {
                 <Grid item xs={12} sm={6} md={4} key={loc.guid}>
                   <Card variant="outlined">
                     <Box sx={{ position: 'relative' }}>
-                      <CardMedia component="img" height="140" image={loc.photo ? `http://localhost:8080/v1/files/download/location/${loc.photo}` : 'https://via.placeholder.com/300x140'} alt={loc.name} />
+                      <CardMedia component="img" height="140" image={loc.photo ? `https://jamydev.com/v1/files/download/location/${loc.photo}` : 'https://via.placeholder.com/300x140'} alt={loc.name} />
                       <IconButton
                         sx={{ position: 'absolute', top: 8, right: 8, bgcolor: 'rgba(255,255,255,0.9)', '&:hover': { bgcolor: 'rgba(255,255,255,1)' } }}
                         size="small"
